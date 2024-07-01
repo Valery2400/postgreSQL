@@ -18,12 +18,6 @@ CREATE TABLE car (
 CREATE TABLE
   driver (driver_id SERIAL PRIMARY KEY, name varchar(50));
 
-CREATE TABLE
-  car (
-    car_id SERIAL PRIMARY KEY,
-    model varchar(50),
-    manufacturer_id int REFERENCES manufacturer (manufacturer_id)
-  );
 
 CREATE TABLE
   ownership (
@@ -74,7 +68,7 @@ VALUES
 FROM 
     car
 JOIN 
-    manufacturer ON cars.manufacturer_id = manufacturer.manufacturer_id;
+    manufacturer ON car.manufacturer_id = manufacturer.manufacturer_id;
     
   --Many-to-Many: Получение водителей и автомобилей, которыми они владеют  
     
@@ -88,5 +82,5 @@ JOIN
 JOIN 
     car ON ownership.car_id = car.car_id;
     
---    WHERE driver.driver_id = 1;
+
 
