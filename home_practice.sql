@@ -2,40 +2,40 @@
 
 -- One-to_Many
 
-CREATE TABLE manufacturers (
+CREATE TABLE manufacturer (
     manufacturer_id SERIAL PRIMARY KEY,
     name varchar(80)
 );
 
-CREATE TABLE cars (
+CREATE TABLE car (
     car_id SERIAL PRIMARY KEY,
     model varchar(80),
-    manufacturer_id int REFERENCES manufacturers(manufacturer_id)
+    manufacturer_id int REFERENCES manufacturer(manufacturer_id)
 );
 
 -- Many-to-Many
 
 CREATE TABLE
-  drivers (driver_id SERIAL PRIMARY KEY, name varchar(50));
+  driver (driver_id SERIAL PRIMARY KEY, name varchar(50));
 
 CREATE TABLE
-  cars (
+  car (
     car_id SERIAL PRIMARY KEY,
     model varchar(50),
-    manufacturer_id int REFERENCES manufacturers (manufacturer_id)
+    manufacturer_id int REFERENCES manufacturer (manufacturer_id)
   );
 
 CREATE TABLE
-  ownerships (
-    driver_id int REFERENCES drivers (driver_id),
-    car_id int REFERENCES cars (car_id),
+  ownership (
+    driver_id int REFERENCES driver (driver_id),
+    car_id int REFERENCES car (car_id),
     PRIMARY KEY (driver_id, car_id)
   );
 
 -- Заполнение таблицы manufacturers
 
 INSERT INTO
-  manufacturers (name)
+  manufacturer (name)
 VALUES
   ('Manufacturer 1'),
   ('Manufacturer 2');
@@ -43,7 +43,7 @@ VALUES
 -- Заполнение таблицы cars
 
 INSERT INTO
-  cars (model, manufacturer_id)
+  car (model, manufacturer_id)
 VALUES
   ('Car Model 1', 1),
   ('Car Model 2', 1),
@@ -52,7 +52,7 @@ VALUES
 -- Заполнение таблицы drivers
 
 INSERT INTO
-  drivers (name)
+  driver (name)
 VALUES
   ('Driver 1'),
   ('Driver 2');
@@ -60,7 +60,7 @@ VALUES
 -- Заполнение таблицы ownerships
 
 INSERT INTO
-  ownerships (driver_id, car_id)
+  ownership (driver_id, car_id)
 VALUES
   (1, 1),
   (1, 2),
@@ -69,22 +69,22 @@ VALUES
   --One-to-Many: Получение автомобилей вместе с их производителями
   
   SELECT 
-    cars.model AS car_model,
-    manufacturers.name AS manufacturer_name
+    car.model AS car_model,
+    manufacturer.name AS manufacturer_name
 FROM 
-    cars
+    car
 JOIN 
-    manufacturers ON cars.manufacturer_id = manufacturers.manufacturer_id;
+    manufacturer ON cars.manufacturer_id = manufacturer.manufacturer_id;
     
   --Many-to-Many: Получение водителей и автомобилей, которыми они владеют  
     
     SELECT 
-    drivers.name AS driver_name,
-    cars.model AS car_model
+    driver.name AS driver_name,
+    car.model AS car_model
 FROM 
-    ownerships
+    ownership
 JOIN 
-    drivers ON ownerships.driver_id = drivers.driver_id
+    driver ON ownership.driver_id = driver.driver_id
 JOIN 
-    cars ON ownerships.car_id = cars.car_id;
+    car ON ownership.car_id = car.car_id;
 
