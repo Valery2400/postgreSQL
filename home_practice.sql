@@ -32,7 +32,7 @@ CREATE TABLE
     PRIMARY KEY (driver_id, car_id)
   );
 
--- Заполнение таблицы manufacturers
+-- Заполнение таблицы manufacturer
 
 INSERT INTO
   manufacturer (name)
@@ -40,7 +40,7 @@ VALUES
   ('Manufacturer 1'),
   ('Manufacturer 2');
 
--- Заполнение таблицы cars
+-- Заполнение таблицы car
 
 INSERT INTO
   car (model, manufacturer_id)
@@ -49,7 +49,7 @@ VALUES
   ('Car Model 2', 1),
   ('Car Model 3', 2);
 
--- Заполнение таблицы drivers
+-- Заполнение таблицы driver
 
 INSERT INTO
   driver (name)
@@ -57,7 +57,7 @@ VALUES
   ('Driver 1'),
   ('Driver 2');
 
--- Заполнение таблицы ownerships
+-- Заполнение таблицы ownership
 
 INSERT INTO
   ownership (driver_id, car_id)
@@ -87,4 +87,6 @@ JOIN
     driver ON ownership.driver_id = driver.driver_id
 JOIN 
     car ON ownership.car_id = car.car_id;
+    
+--    WHERE driver.driver_id = 1;
 
